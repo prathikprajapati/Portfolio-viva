@@ -124,7 +124,7 @@ h1, h2, h3 {
     padding: 40px 20px;
     margin-top: 50px;
     position: relative;
-    z-index: -1;
+    z-index: 1;
 }
 
 .profile {
@@ -137,8 +137,9 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     border-radius: 30px;
-    overflow: hidden;
+    overflow: visible;
     padding: 0 40px;
+    z-index: 1;
 }
 
 .profile .sec-left {
@@ -146,6 +147,8 @@ h1, h2, h3 {
     font-size: 3rem;
     padding: 20px;
     white-space: nowrap;
+    position: relative;
+    z-index: 2;
 }
 
 .profile .sec-left p {
@@ -174,23 +177,29 @@ h1, h2, h3 {
     display: flex;
     justify-content: center;
     margin-top: 30px;
+    position: relative;
+    z-index: 10;
 }
 
 .cv-button a {
-    background-color: var(--accent-color);
-    border-radius: 50px;
-    color: var(--primary-bg);
-    border: none;
-    padding: 15px 30px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 20px;
-    transition: all 0.3s ease;
+    display: inline-block;
+    background-color: var(--accent-color) !important;
+    border-radius: 50px !important;
+    color: var(--primary-bg) !important;
+    border: none !important;
+    padding: 15px 30px !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    font-size: 20px !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
 }
 
 .cv-button a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
 }
 
 .profile .sec-right {
@@ -322,6 +331,7 @@ h1, h2, h3 {
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    margin: 25px 0;  
 }
 
 .skill-container:hover {
@@ -332,7 +342,7 @@ h1, h2, h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .skill-header span {
@@ -347,9 +357,9 @@ h1, h2, h3 {
 }
 
 .skill-bar {
-    height: 10px;
-    background: var(--primary-bg);
-    border-radius: 5px;
+    height: 20px;
+    background: var(--secondary-bg);
+    border-radius: 10px;
     margin-bottom: 15px;
     overflow: hidden;
     position: relative;
@@ -371,6 +381,56 @@ h1, h2, h3 {
     justify-content: space-between;
     color: var(--text-secondary);
     font-size: 0.9rem;
+}
+
+.skill-container {
+    margin: 20px 0;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.skill-header h3 {
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.skill-bar {
+    height: 20px;
+    background: var(--secondary-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.skill-fill {
+    height: 100%;
+    width: 0;
+    position: relative;
+    border-radius: 10px;
+}
+
+.skill-level-tag {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(calc(100% + 10px), -50%);
+    background: var(--accent-color);
+    color: var(--primary-bg);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.skill-fill:hover .skill-level-tag {
+    opacity: 1;
 }
 
 /* Responsive Design for Skills */
@@ -464,14 +524,7 @@ h1, h2, h3 {
 #projects {
     padding: 80px 20px;
     position: relative;
-    z-index: -1;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 70px;
-    color: var(--text-primary);
-    margin-bottom: 60px;
+    z-index: 1;
 }
 
 .project-filters {
@@ -480,6 +533,8 @@ h1, h2, h3 {
     gap: 15px;
     margin-bottom: 40px;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
 }
 
 .filter-btn {
@@ -491,11 +546,29 @@ h1, h2, h3 {
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.filter-btn:hover::before,
+.filter-btn.active::before {
+    left: 0;
 }
 
 .filter-btn.active,
 .filter-btn:hover {
-    background: var(--accent-color);
     color: var(--primary-bg);
 }
 
@@ -513,12 +586,20 @@ h1, h2, h3 {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: translateY(0);
     display: block;
 }
 
-.project-card.hide {
-    display: none;
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.project-card[style*="display: none"] {
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .project-image {
@@ -663,6 +744,25 @@ h1, h2, h3 {
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.timeline-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 60px;
+    padding: 0 20px;
+}
+
+#left, #right {
+    width: 450px;
+}
+
 .timeline {
     position: relative;
     background: var(--secondary-bg);
@@ -670,11 +770,14 @@ h1, h2, h3 {
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    margin: 30px;
+    margin: 30px auto;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     position: relative;
     z-index: -1;
+    width: 450px;
+    min-height: 400px;
+    box-sizing: border-box;
 }
 
 .timeline ul {
@@ -682,6 +785,7 @@ h1, h2, h3 {
     border-left: 4px solid var(--accent-color);
     padding-left: 30px;
     position: relative;
+    width: 100%;
 }
 
 .timeline ul::before {
@@ -1423,4 +1527,13 @@ a, button, .timeline ul li, .containers .slide .item {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+.profile::before,
+.profile::after {
+    display: none;
 }
